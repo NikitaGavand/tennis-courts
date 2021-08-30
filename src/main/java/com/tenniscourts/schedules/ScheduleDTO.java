@@ -2,6 +2,11 @@ package com.tenniscourts.schedules;
 
 import com.tenniscourts.tenniscourts.TennisCourtDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +26,13 @@ public class ScheduleDTO {
 
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm")
     @NotNull
+    @JsonDeserialize(using = LocalDateDeserializer.class)  
+    @JsonSerialize(using = LocalDateSerializer.class) 
     private LocalDateTime startDateTime;
 
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm")
+    @JsonDeserialize(using = LocalDateDeserializer.class)  
+    @JsonSerialize(using = LocalDateSerializer.class) 
     private LocalDateTime endDateTime;
 
 }

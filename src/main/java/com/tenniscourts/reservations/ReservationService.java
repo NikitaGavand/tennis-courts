@@ -61,13 +61,13 @@ public class ReservationService {
     }
 
     private void validateCancellation(Reservation reservation) {
-        if (!ReservationStatus.READY_TO_PLAY.equals(reservation.getReservationStatus())) {
-            throw new IllegalArgumentException("Cannot cancel/reschedule because it's not in ready to play status.");
-        }
-
-        if (reservation.getSchedule().getStartDateTime().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Can cancel/reschedule only future dates.");
-        }
+//        if (!ReservationStatus.READY_TO_PLAY.equals(reservation.getReservationStatus())) {
+//            throw new IllegalArgumentException("Cannot cancel/reschedule because it's not in ready to play status.");
+//        }
+//
+//        if (reservation.getSchedule().getStartDateTime().isBefore(LocalDateTime.now())) {
+//            throw new IllegalArgumentException("Can cancel/reschedule only future dates.");
+//        }
     }
 
     public BigDecimal getRefundValue(Reservation reservation) {

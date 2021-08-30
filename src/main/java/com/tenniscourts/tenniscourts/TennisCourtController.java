@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@Api(tags = { "Tennis Court" })
+@Api(tags = { "Tennis Court" },value="This controller helps to perform create update delete operations on tennis court")
 @RequestMapping("/tennis")
 public class TennisCourtController extends BaseRestController {
 
@@ -45,7 +45,7 @@ public class TennisCourtController extends BaseRestController {
     @GetMapping(path="/{tennisCourtId}")
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "get details of Tennis Court by Id", notes = "This service is finds the tennis court")
+    @ApiOperation(value = "Get details of Tennis Court by Id", notes = "This service is finds the tennis court")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful operation"),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = InternalServerErrorException.class) })

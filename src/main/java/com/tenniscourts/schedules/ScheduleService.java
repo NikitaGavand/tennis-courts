@@ -1,7 +1,12 @@
 package com.tenniscourts.schedules;
 
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.tenniscourts.exceptions.EntityNotFoundException;
+import com.tenniscourts.tenniscourts.TennisCourtDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,23 +15,26 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleService {
 
+	@Autowired
     private final ScheduleRepository scheduleRepository;
-
+	@Autowired
     private final ScheduleMapper scheduleMapper;
 
     public ScheduleDTO addSchedule(Long tennisCourtId, CreateScheduleRequestDTO createScheduleRequestDTO) {
-        //TODO: implement addSchedule
-        return null;
+    	ScheduleDTO respObject = scheduleMapper.map(scheduleRepository.save(scheduleMapper.map(createScheduleRequestDTO)));
+        return respObject;
     }
 
     public List<ScheduleDTO> findSchedulesByDates(LocalDateTime startDate, LocalDateTime endDate) {
-        //TODO: implement
-        return null;
+    	Iterable<Long> ids = null;
+		List<ScheduleDTO> schedules = scheduleMapper.map(scheduleRepository.findAllById(ids));
+        return schedules;
     }
 
     public ScheduleDTO findSchedule(Long scheduleId) {
-        //TODO: implement
-        return null;
+    	 return scheduleRepository.findById(scheduleId).map(scheduleMapper::map).<EntityNotFoundException>orElseThrow(() -> {
+            throw new EntityNotFoundException("Schedule not found.");
+        });
     }
 
     public List<ScheduleDTO> findSchedulesByTennisCourtId(Long tennisCourtId) {

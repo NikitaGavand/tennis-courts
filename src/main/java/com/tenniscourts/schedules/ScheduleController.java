@@ -35,7 +35,7 @@ public class ScheduleController extends BaseRestController {
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
     @PostMapping(path="/schedule")
-    @ApiOperation(value = "Add schedule", notes = "This service is reserves the tennis court", tags = { "Reservation - Tennis Court" })
+    @ApiOperation(value = "Add schedule", notes = "This service adds the schedule")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful operation"),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = InternalServerErrorException.class) })
@@ -46,7 +46,7 @@ public class ScheduleController extends BaseRestController {
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
     @GetMapping(path="/schedule")
-    @ApiOperation(value = "Reservation for Tennis Court", notes = "This service is reserves the tennis court", tags = { "Reservation - Tennis Court" })
+    @ApiOperation(value = "Gets list of schedule from start date to emd Date", notes = "This service is gets schedule of the tennis court by the query params passed as startDate and endDate")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful operation"),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = InternalServerErrorException.class) })
@@ -58,7 +58,7 @@ public class ScheduleController extends BaseRestController {
     @GetMapping(path="/{scheduleId}")
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Reservation for Tennis Court", notes = "This service is reserves the tennis court", tags = { "Reservation - Tennis Court" })
+    @ApiOperation(value = "get the schedule by Id", notes = "This service is gets the details of schedule by ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful operation"),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = InternalServerErrorException.class) })
