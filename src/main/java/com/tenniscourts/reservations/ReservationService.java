@@ -1,27 +1,36 @@
 package com.tenniscourts.reservations;
 
-import com.tenniscourts.exceptions.EntityNotFoundException;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.tenniscourts.exceptions.EntityNotFoundException;
+
+import lombok.AllArgsConstructor;
+
 @Service
 @AllArgsConstructor
+@Transactional
 public class ReservationService {
+	@Autowired
+    private  final ReservationRepository reservationRepository;
+	@Autowired
+    private  final ReservationMapper reservationMapper;
+	
 
-    private final ReservationRepository reservationRepository;
-
-    private final ReservationMapper reservationMapper;
-
-    public ReservationDTO bookReservation(CreateReservationRequestDTO createReservationRequestDTO) {
-        throw new UnsupportedOperationException();
+	public ReservationDTO bookReservation(CreateReservationRequestDTO createReservationRequestDTO) {	
+		Reservation mapper = reservationMapper.map(createReservationRequestDTO);
+		Reservation reservation = reservationRepository.save(mapper);
+		return reservationMapper.map(reservation);
     }
 
     public ReservationDTO findReservation(Long reservationId) {
-        return reservationRepository.findById(reservationId).map(reservationMapper::map).orElseThrow(() -> {
+        return reservationRepository.findById(reservationId).map(reservationMapper::map).<EntityNotFoundException>orElseThrow(() -> {
             throw new EntityNotFoundException("Reservation not found.");
         });
     }
@@ -38,7 +47,7 @@ public class ReservationService {
             BigDecimal refundValue = getRefundValue(reservation);
             return this.updateReservation(reservation, refundValue, ReservationStatus.CANCELLED);
 
-        }).orElseThrow(() -> {
+        }).<EntityNotFoundException>orElseThrow(() -> {
             throw new EntityNotFoundException("Reservation not found.");
         });
     }
